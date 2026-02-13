@@ -1,0 +1,100 @@
+  import google.generativeai as genai
+models/gemini-2.5-flash
+models/gemini-2.5-pro
+models/gemini-2.0-flash
+models/gemini-2.0-flash-001
+models/gemini-2.0-flash-exp-image-generation
+models/gemini-2.0-flash-lite-001
+models/gemini-2.0-flash-lite
+models/gemini-exp-1206
+models/gemini-2.5-flash-preview-tts
+models/gemini-2.5-pro-preview-tts
+models/gemma-3-1b-it
+models/gemma-3-4b-it
+models/gemma-3-12b-it
+models/gemma-3-27b-it
+models/gemma-3n-e4b-it
+models/gemma-3n-e2b-it
+models/gemini-flash-latest
+models/gemini-flash-lite-latest
+models/gemini-pro-latest
+models/gemini-2.5-flash-lite
+models/gemini-2.5-flash-image
+models/gemini-2.5-flash-preview-09-2025
+models/gemini-2.5-flash-lite-preview-09-2025
+models/gemini-3-pro-preview
+models/gemini-3-flash-preview
+models/gemini-3-pro-image-preview
+models/nano-banana-pro-preview
+models/gemini-robotics-er-1.5-preview
+models/gemini-2.5-computer-use-preview-10-2025
+models/deep-research-pro-preview-12-2025
+models/gemini-embedding-001
+models/aqa
+models/imagen-4.0-generate-preview-06-06
+models/imagen-4.0-ultra-generate-preview-06-06
+models/imagen-4.0-generate-001
+models/imagen-4.0-ultra-generate-001
+models/imagen-4.0-fast-generate-001
+models/veo-2.0-generate-001
+models/veo-3.0-generate-001
+models/veo-3.0-fast-generate-001
+models/veo-3.1-generate-preview
+models/veo-3.1-fast-generate-preview
+models/gemini-2.5-flash-native-audio-latest
+models/gemini-2.5-flash-native-audio-preview-09-2025
+models/gemini-2.5-flash-native-audio-preview-12-2025
+
+
+
+file text 
+eng_text Here's a clear English translation of the provided Hindi text:
+
+**Hello everyone, and welcome to college. Today's session is going to be a Q&A session regarding the new Prime Batch, which is the complete 
+AIML batch.**
+
+In this batch, we will prepare for AI job roles over four months. For all students who are dedicatedly waiting for Prime, there is an early 
+bird offer that will be valid until October 27th, 9:00 PM. The link for enrolling in the batch is in the description box.
+
+**In the Prime batch, we will prepare for AI engineering or data science-specific roles.** We will learn concepts, code, and build multiple 
+projects. Our focus will be on practical learning and skill building.
+
+**Who is the AIML batch for?**
+The AIML batch is for four types of people:
+
+1. Students and graduates who want to prepare for AI tech roles.
+2. Working professionals who want to transition to AI-based tech roles.
+3. Students preparing for software engineering positions but also want to keep a healthy mix of development and machine learning projects in their resume.
+4. Individuals looking to upskill in AI-based skills.
+
+**If you're a BTech, MTech, BCA, MCA student, you can prepare for your full-time roles or internships with us.** Working professionals who want to transition to AI-based tech roles can also join.
+
+**What's the schedule of the batch?**
+The batch will be for four plus months. We will have access to the batch for 15 months. Our lectures will be on weekends, with two days of lectures and live mentorship sessions.
+
+**Will fundamentals be covered?**
+Yes, we will start with complete fundamentals. We will learn Python programming language from scratch and cover all important concepts.     
+
+**No prerequisites are required for the AIML batch.** If you're a student who has not programmed before or has some programming experience, 
+you can still join.
+
+**What will we learn in the batch?**
+We will learn:
+
+* Python programming language
+* Data collection, preprocessing, and visualization
+* Mathematics required for AI, including statistics, probability, and more
+* Machine learning algorithms, including supervised, unsupervised, and reinforcement learning
+* Deep learning concepts, including neural networks, transformers, and more
+* AI engineering skills, including Flask, SQL, Git, and GitHub
+
+**Will there be a certificate?**
+Yes, there will be a certificate of completion after completing all lectures. However, I strongly advise you not to join just for a certificate. Join only if you want to learn AI and ML skills practically.
+
+**Is there a link for international students?**
+Yes, there is a separate link for international students, which is available in the description box.
+
+**Is there an EMI option?**
+The EMI option is bank-dependent. You can check the payment page to see if it's available for your bank.
+
+I hope I've covered all your doubts and queries. If you have any additional doubts, you can check the FAQ section on our college website. The Prime batch classes will start on November 15th, and the early bird offer is valid until October 27th, 9:00 PM. See you in class!

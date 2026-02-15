@@ -78,7 +78,6 @@
 
 
 
-
 from retriever import get_retriever
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_groq import ChatGroq
@@ -91,11 +90,14 @@ import os
 
 load_dotenv()
 
-GEMINI_API_KEY="AIzaSyAH0gobl4Bv_rQgCcfyyLrw-thTmNQt26o"
-PINECONE_API_KEY="pcsk_2bbBTM_9116sXkdN3THjT46Ng41gKDwEUEJBtGujqpeWGwWDV53THbiyhVpnVTWJzWDGKk"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+index_name=os.getenv("PINECONE_INDEX")
+
 
 model = ChatGroq(
     model="meta-llama/llama-4-scout-17b-16e-instruct"
+    # model="openai/gpt-oss-120b"
 )
 embeddings = GoogleGenerativeAIEmbeddings(
     model="models/gemini-embedding-001",
@@ -105,40 +107,42 @@ vector_store = get_retriever(embeddings)
 
 # -------------------- User Query --------------------
 # https://www.youtube.com/watch?v=6QkH6QDKZ3g&list=RD6QkH6QDKZ3g&start_radio=1
-user_query = """ What is the video about? 
+# https://www.youtube.com/watch?v=dfPwdJGRmdc&t=1s 
+user_query = """ What is the video about? and what we learn in this course , or it is befintial for a mern stack devloper or nor,
 """
 classifyedQuery=function.classify_user_query(user_query)
 if classifyedQuery=="NEW_VIDEO":
     vedio_id=function.extract_video_id(user_query)
-    print("This is a new video, need to ingest and create vector db",vedio_id)
+    question=function.extract_question(user_query)
     save_video_in_vectordb(vedio_id)
+    vector_store=get_retriever(embeddings)
     
     docs = vector_store.similarity_search(
-        user_query,
+        question,
         k=3
     )
-    for i, doc in enumerate(docs):
-        prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are a helpful assistant.
-        Answer ONLY from the provided transcript context.
-        If the answer is not in the context, say you don't know.
-        
-        Transcript Context:
-        {context}
-        """),
-            ("human", "Question: {question}")
-        ])
-         
-        parser = StrOutputParser()
-        chain = prompt | model | parser
-        
-        # -------------------- Final RAG Response --------------------
-        response = chain.invoke({
-            "context": "\n".join([doc.page_content for doc in docs]),
-            "question": user_query
-        })
-        print("llm response",response)
-        break
+    # for i, doc in enumerate(docs):
+    context = "\n\n".join([doc.page_content for doc in docs])
+    prompt = ChatPromptTemplate.from_messages([
+    ("system", """You are a helpful assistant.
+    Answer ONLY from the provided transcript context.
+    If the answer is not in the context, say you don't know.
+    
+    Transcript Context:
+    {context}
+    """),
+        ("human", "Question: {question}")
+    ])
+     
+    parser = StrOutputParser()
+    chain = prompt | model | parser
+    
+    # -------------------- Final RAG Response --------------------
+    response = chain.invoke({
+        "context": context,
+        "question": question
+    })
+    print("llm response",response)
 
 
 elif classifyedQuery=="EXISTING_VIDEO":

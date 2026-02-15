@@ -4,14 +4,22 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_core.documents import Document
+from pinecone import Pinecone
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+index_name=os.getenv("PINECONE_INDEX")
 
 
 def save_video_in_vectordb(video_id):
-
     print("Starting ingestion for Video ID :", video_id)
-
-    GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
-    index_name="yt-chat"
+    pc = Pinecone(
+    api_key=PINECONE_API_KEY
+    )
 
     embeddings = GoogleGenerativeAIEmbeddings(
         model="models/gemini-embedding-001",

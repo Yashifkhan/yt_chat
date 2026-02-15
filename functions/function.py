@@ -30,3 +30,16 @@ def extract_video_id(text):
         return match.group(1)
     else:
         return None
+    
+def extract_question(user_query):
+
+    # Match youtube URL
+    url_pattern = r"(https?://)?(www\.)?(youtube\.com|youtu\.be)/\S+"
+
+    # Remove youtube link
+    question = re.sub(url_pattern, "", user_query)
+
+    # Remove extra spaces
+    question = question.strip()
+
+    return question

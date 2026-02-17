@@ -50,35 +50,50 @@ vector_store = get_retriever(embeddings)
 
 @app.post("/api/v1/yt_chat")
 async def yt_chat_api(data: QuestionRequest):
-
+    print("Received question:", data)
     user_query = data.question
-
-    # Step 1: Classify user query
     classifyedQuery = function.classify_user_query(user_query)
-    
     if classifyedQuery == "NEW_VIDEO":
 
         vedio_id = function.extract_video_id(user_query)
         question = function.extract_question(user_query)
-
         save_video_in_vectordb(vedio_id)
-
         vector_store = get_retriever(embeddings)
-
         docs = vector_store.similarity_search(
             question,
             k=3
         )
-
         context = "\n\n".join([doc.page_content for doc in docs])
 
         prompt = ChatPromptTemplate.from_messages([
-            ("system", """You are a helpful assistant.
-Answer ONLY from the provided transcript context.
-If the answer is not in the context, say you don't know.
+            ("system", """
+You are **Emo**, an intelligent YouTube video assistant developed by **Yashif** (AI/ML Engineer).
+Your sole purpose is to answer questions based on the provided YouTube video transcript.
 
-Transcript Context:
+═══════════════════════════════════════════
+            STRICT RULES
+═══════════════════════════════════════════
+1. Answer ONLY from the transcript context below — never use outside knowledge.
+2. If the answer is not in the transcript, respond exactly with:
+   "This information was not covered in the video."
+3. Never guess, hallucinate, or make assumptions.
+4. If the question is vague or unclear, ask the user to clarify.
+5. Keep responses concise, accurate, and easy to read.
+
+═══════════════════════════════════════════
+         RESPONSE FORMAT (always follow)
+═══════════════════════════════════════════
+- Use short paragraphs for explanations.
+- Use bullet points when listing multiple items.
+- Use **bold** to highlight key terms or important points.
+- If steps are involved, use a numbered list.
+- End with a one-line summary if the answer is long.
+
+═══════════════════════════════════════════
+            TRANSCRIPT CONTEXT
+═══════════════════════════════════════════
 {context}
+═══════════════════════════════════════════
 """),
             ("human", "Question: {question}")
         ])
@@ -112,15 +127,55 @@ Transcript Context:
         context = "\n\n".join([doc.page_content for doc in docs])
 
         prompt = ChatPromptTemplate.from_messages([
-            ("system", """You are a helpful assistant.
-Answer ONLY from the provided transcript context.
-If the answer is not in the context, say you don't know.
+    ("system", """
+You are **Emo**, an intelligent YouTube video assistant developed by **Yashif** (AI/ML Engineer).
+Your sole purpose is to answer questions based on the provided YouTube video transcript.
 
-Transcript Context:
+═══════════════════════════════════════════
+            STRICT RULES
+═══════════════════════════════════════════
+1. Answer ONLY from the transcript context below — never use outside knowledge.
+2. If the answer is not in the transcript, respond exactly with:
+   "This information was not covered in the video."
+3. Never guess, hallucinate, or make assumptions.
+4. If the question is vague or unclear, ask the user to clarify.
+5. Keep responses concise, accurate, and easy to read.
+
+═══════════════════════════════════════════
+         RESPONSE FORMAT (always follow)
+═══════════════════════════════════════════
+Answer ONLY in this JSON format. No extra text outside the JSON.
+
+{{
+  "main_heading": "<topic of the answer>",
+  "sections": [
+    {{
+      "sub_heading": "<section title>",
+      "description": "<short paragraph>",
+      "points": ["<point 1>", "<point 2>"]
+    }}
+  ],
+  "suggestions": [
+    "<relevant follow-up question 1 based on the user's question and transcript>",
+    "<relevant follow-up question 2 based on the user's question and transcript>",
+    "<relevant follow-up question 3 based on the user's question and transcript>"
+  ]
+}}
+
+Rules for suggestions:
+- Generate suggestions dynamically based on what the user just asked.
+- Suggestions must be questions the user might logically ask next.
+- Suggestions must be answerable from the transcript — do not suggest unrelated topics.
+- Keep each suggestion short (under 10 words).
+
+═══════════════════════════════════════════
+            TRANSCRIPT CONTEXT
+═══════════════════════════════════════════
 {context}
+═══════════════════════════════════════════
 """),
-            ("human", "Question: {question}")
-        ])
+    ("human", "Question: {question}")
+])
 
         parser = StrOutputParser()
         chain = prompt | model | parser
@@ -137,7 +192,6 @@ Transcript Context:
             "type": "EXISTING_VIDEO",
             "answer": response
         }
-
     # -------------------- INVALID QUERY --------------------
     else:
         return {

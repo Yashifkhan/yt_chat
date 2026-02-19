@@ -10,6 +10,7 @@ index_name=os.getenv("PINECONE_INDEX")
 
 
 pc=Pinecone(api_key=PINECONE_API_KEY)
+
 index=pc.Index(index_name)
 
 def get_retriever(embeddings):

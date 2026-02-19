@@ -41,11 +41,6 @@ embeddings = GoogleGenerativeAIEmbeddings(
 )
 vector_store = get_retriever(embeddings)
 
-# -------------------- User Query --------------------
-# https://www.youtube.com/watch?v=6QkH6QDKZ3g&list=RD6QkH6QDKZ3g&start_radio=1
-# https://www.youtube.com/watch?v=dfPwdJGRmdc&t=1s 
-# user_query = """ What is the video about? and what we learn in this course , or it is befintial for a mern stack devloper or nor,
-# """
 
 
 @app.post("/api/v1/yt_chat")

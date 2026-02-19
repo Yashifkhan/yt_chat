@@ -45,7 +45,6 @@ def save_video_in_vectordb(video_id):
 
     chunks = splitter.split_text(eng_text)
 
-    print("Creating Documents...")
     docs = [Document(page_content=chunk) for chunk in chunks]
 
     print("Storing Embeddings to Pinecone...")

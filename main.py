@@ -239,14 +239,12 @@ MODEL_MAP = {
     "emo-oss": "openai/gpt-oss-120b"
 }
 
-# ── Init once at startup ──────────────────────────────────────────────────────
 embeddings = GoogleGenerativeAIEmbeddings(
     model="models/gemini-embedding-001",
     google_api_key=GEMINI_API_KEY
 )
 vector_store = get_retriever(embeddings)
 
-# ── Model cache ───────────────────────────────────────────────────────────────
 MODEL_CACHE = {}
 
 def get_model(model_name: str) -> ChatGroq:
@@ -254,7 +252,6 @@ def get_model(model_name: str) -> ChatGroq:
         MODEL_CACHE[model_name] = ChatGroq(model=model_name)
     return MODEL_CACHE[model_name]
 
-# ── Prompts defined once ──────────────────────────────────────────────────────
 NEW_VIDEO_PROMPT = ChatPromptTemplate.from_messages([
     ("system", """
 You are **Emo**, an intelligent YouTube video assistant developed by **Yashif** (AI/ML Engineer).
@@ -394,7 +391,6 @@ async def yt_chat_api(data: QuestionRequest):
             "answer": response
         }
 
-    # -------------------- INVALID QUERY --------------------
     else:
         return {
             "status": "error",
